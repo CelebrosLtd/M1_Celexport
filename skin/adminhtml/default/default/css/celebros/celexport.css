@@ -1,0 +1,66 @@
+.range-line.date input {
+    width: 100px !important;
+    max-width: 120px;
+    float: left !important;
+}
+.range-line.date {
+    width: 100% !important; 
+}
+#anchor-content .content-header {
+    margin-top: 40px;
+}
+.grid tr.filter .range input {
+    width: 80% !important;
+}
+
+table#systemcronlogGrid_table {
+    display: table;
+    width: 100%;
+}
+table#systemcronlogGrid_table thead,
+table#systemcronlogGrid_table tbody {
+    float: left;
+    width: 100%;
+}
+table#systemcronlogGrid_table tbody,
+table#systemcronlogGrid_table thead {
+    overflow-y: scroll;
+    max-height: 208px;
+}
+table#systemcronlogGrid_table tr {
+    width: 100%;
+    display: table;
+    text-align: left;
+}
+table#systemcronlogGrid_table th,
+table#systemcronlogGrid_table td {
+    width: 50%;
+}
+
+table#crontasksGrid_table {
+    display: table;
+    width: 100%;
+}
+table#crontasksGrid_table thead,
+table#crontasksGrid_table tbody {
+    float: left;
+    width: 100%;
+}
+table#crontasksGrid_table tbody,
+table#crontasksGrid_table thead {
+    overflow-y: scroll;
+    max-height: 208px;
+}
+table#crontasksGrid_table tr {
+    width: 100%;
+    display: table;
+    text-align: left;
+}
+table#crontasksGrid_table th,
+table#crontasksGrid_table td {
+    width: 15%;
+}
+table#crontasksGrid_table th:first-child,
+table#crontasksGrid_table td:first-child {
+    width: 25%;
+}

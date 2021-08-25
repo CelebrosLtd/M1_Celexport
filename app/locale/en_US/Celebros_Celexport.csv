@@ -1,0 +1,1 @@
+"stamp_dialog_message %s %s %s", "The data will be exported to:\n\n Host: %s\n User: %s\n Password: %s\n\n If this is a development environment\nand the FTP above is Celebros's environment\nit menas that you development environment\nwill be returned by Celebros's production"
