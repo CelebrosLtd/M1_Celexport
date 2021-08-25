@@ -13,8 +13,8 @@
 <config>
     <modules>
         <Celebros_Celexport>
-            <version>1.0.7</version>
-            <build>141</build>
+            <version>1.0.8</version>
+            <build>142</build>
         </Celebros_Celexport>
     </modules>
     <frontend>
@@ -112,11 +112,6 @@
             <celexport>
                 <class>Celebros_Celexport_Block</class>
             </celexport>
-            <!--<adminhtml>
-                <rewrite>
-                    <page_menu>Celebros_Celexport_Block_Adminhtml_Page_Menu</page_menu>
-                </rewrite>
-            </adminhtml>-->
         </blocks>
         <helpers>
             <celexport>
@@ -151,6 +146,9 @@
                 <extra_tables></extra_tables>
                 <rootcat_products_export>0</rootcat_products_export>
                 <currency>base_without</currency>
+                <passive>1</passive>
+                <ssl>0</ssl>
+                <ftp_protocol>ftp</ftp_protocol>
             </export_settings>
             <advanced>
                 <single_process>0</single_process>

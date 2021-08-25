@@ -322,21 +322,9 @@ class Celebros_Celexport_Model_Exporter
         return $tier_price;
     }
     
-    public function ftpfile($zipFilePath, $zipUpload = TRUE)
+    protected function getIOConfig()
     {
-        $helper = Mage::helper('celexport');
-        if ($helper->getCurrentEnvStamp() != $helper->getFtpEnvStamp($this->_fStore_id)) {
-            $this->comments_style('error','Env stamp for this store is not correct', 'Env_stamp_error');
-            return FALSE;
-        }
-        
-        if (!file_exists($zipFilePath)) {
-            $this->comments_style('error','No ' . $zipFilePath . ' file found','No_zip_file_found');
-            
-            return FALSE;
-        }   
-        
-        $ioConfig=array();
+        $ioConfig = array();
         
         if ($this->_fFTPHost != '') {
             $ioConfig['host'] = $this->_fFTPHost;
@@ -351,58 +339,56 @@ class Celebros_Celexport_Model_Exporter
         
         if ($this->_fFTPUser != '') {
             $ioConfig['user'] = $this->_fFTPUser;
+            $ioConfig['username'] = $ioConfig['user'];
         } else {
             $ioConfig['user']='anonymous';
+            $ioConfig['username'] = $ioConfig['user'];
             $ioConfig['password']='anonymous@noserver.com';
         }
         
         if ($this->_fFTPPassword != '') {
             $ioConfig['password'] = $this->_fFTPPassword;
         }
+
+        if ($this->_fFTPSsl) {
+            $ioConfig['ssl'] = true;
+        }
         
         $ioConfig['passive'] = $this->_fFTPPassive;
         
-        if ($this->_fPath != '') {
-            $ioConfig['path']= $this->_fPath;
-        }
-        $this->_config = $ioConfig;
-        $this->_conn =@ftp_connect($this->_config['host'], $this->_config['port']);
-        
-        if (!$this->_conn) {
-            $this->comments_style('error','Could not establish FTP connection, invalid host or port','invalid_ftp_host/port');
-            
-            return FALSE;
-        }
-        if (!@ftp_login($this->_conn, $this->_config['user'], $this->_config['password'])) {
-            $this->close();
-            $this->comments_style('error','Could not establish FTP connection, invalid user name or password','Invalid_ftp_user_name_or_password');
-            
-            return FALSE;
+        return $ioConfig;
+    }
+    
+    public function ftpfile(
+        $zipFilePath,
+        $zipUpload = true
+    ) {
+        $helper = Mage::helper('celexport');
+        if ($helper->getCurrentEnvStamp() != $helper->getFtpEnvStamp($this->_fStore_id)) {
+            $this->comments_style('error','Env stamp for this store is not correct', 'Env_stamp_error');
+            return false;
         }
         
-        if (!@ftp_pasv($this->_conn, TRUE)) {
-            $this->close();
-            $this->comments_style('error','Invalid file transfer mode','Invalid_file_transfer_mode');
-            
-            return FALSE;
+        if (!file_exists($zipFilePath)) {
+            $this->comments_style('error','No ' . $zipFilePath . ' file found', 'No_zip_file_found');
+            return false;
+        }   
+        
+        $ioConfig = $this->getIOConfig();
+        
+        $remoteClient = Mage::helper('celexport/client_remote');
+        $result = $remoteClient->send(
+            $this->_fFTPProtocol,
+            $ioConfig,
+            $zipFilePath
+        );
+        
+        if ($result instanceof Exception) {
+            $this->comments_style('error', $result->getMessage(), 'No_connection');
+            $result = false;
         }
         
-        if ($zipUpload) {
-            if (!file_exists($zipFilePath)) {
-                $this->comments_style('error','No ' . $zipFilePath . ' file found','No_zip_file_found');
-            }       
-            
-            $upload = @ftp_put($this->_conn, basename($zipFilePath), $zipFilePath, FTP_BINARY);
-            
-            if (!$upload) {
-                 $this->comments_style('error','File upload failed','File_upload_failed');
-                 $upload=FALSE;
-            }
-        }
-        
-        $this->uploadLog($this->_conn);
-        
-        return $upload;
+        return $result;
     }
     
     public function uploadLog($connection)
@@ -508,6 +494,8 @@ class Celebros_Celexport_Model_Exporter
         $this->_fFTPUser = $this->_fStore->getConfig('celexport/export_settings/ftp_user');
         $this->_fFTPPassword = $this->_fStore->getConfig('celexport/export_settings/ftp_password');
         $this->_fFTPPassive = $this->_fStore->getConfig('celexport/export_settings/passive');
+        $this->_fFTPSsl = $this->_fStore->getConfig('celexport/export_settings/ssl');
+        $this->_fFTPProtocol = $this->_fStore->getConfig('celexport/export_settings/ftp_protocol');
         
         
         /*$currentEnvStamp = Mage::helper('celexport')->getCurrentEnvStamp();

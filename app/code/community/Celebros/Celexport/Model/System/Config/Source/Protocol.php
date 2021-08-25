@@ -10,13 +10,13 @@
  * @category    Celebros
  * @package     Celebros_Celexport
  */
-class Celebros_Celexport_Model_System_Config_Source_Fileftp
+class Celebros_Celexport_Model_System_Config_Source_Protocol
 {
     public function toOptionArray()
     {
         return array(
-            array('value' => 'file', 'label' => Mage::helper('celexport')->__('File')),
-            array('value' => 'ftp', 'label'  => Mage::helper('celexport')->__('FTP/SFTP')),
+            array('value' => 'ftp', 'label' => Mage::helper('celexport')->__('FTP')),
+            array('value' => 'sftp', 'label'  => Mage::helper('celexport')->__('SFTP')),
         );
     }
     

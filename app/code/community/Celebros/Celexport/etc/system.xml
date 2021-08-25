@@ -149,7 +149,7 @@
                             </depends>
                         </ftp_notice>
                         <ftp_host translate="label">
-                            <label>FTP Host</label>
+                            <label>FTP/SFTP Host</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>92</sort_order>
                             <show_in_default>1</show_in_default>
@@ -161,7 +161,7 @@
                             </depends>
                         </ftp_host>
                         <ftp_port translate="label">
-                            <label>FTP Port</label>
+                            <label>FTP/SFTP Port</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>93</sort_order>
                             <show_in_default>1</show_in_default>
@@ -173,7 +173,7 @@
                             </depends>
                         </ftp_port>
                         <ftp_user translate="label">
-                            <label>FTP User</label>
+                            <label>FTP/SFTP User</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>94</sort_order>
                             <show_in_default>1</show_in_default>
@@ -185,7 +185,7 @@
                             </depends>
                         </ftp_user>
                         <ftp_password translate="label">
-                            <label>FTP Password</label>
+                            <label>FTP/SFTP Password</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>95</sort_order>
                             <show_in_default>1</show_in_default>
@@ -196,10 +196,10 @@
                                 <export_enabled>1</export_enabled>
                             </depends>
                         </ftp_password>
-                        <passive translate="label">
-                            <label>Passive</label>
+                        <ftp_protocol translate="label">
+                            <label>Protocol</label>
                             <frontend_type>select</frontend_type>
-                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <source_model>celexport/system_config_source_protocol</source_model>
                             <sort_order>96</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>0</show_in_website>
@@ -208,7 +208,35 @@
                                 <type>ftp</type>
                                 <export_enabled>1</export_enabled>
                             </depends>
+                        </ftp_protocol>
+                        <passive translate="label">
+                            <label>Passive</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>97</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <type>ftp</type>
+                                <export_enabled>1</export_enabled>
+                                <ftp_protocol>ftp</ftp_protocol>
+                            </depends>
                         </passive>
+                        <ssl translate="label">
+                            <label>SSL</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>97</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <type>ftp</type>
+                                <export_enabled>1</export_enabled>
+                                <ftp_protocol>ftp</ftp_protocol>
+                            </depends>
+                        </ssl>
                         <env_stamp translate="label">
                             <label>Env Stamp</label>
                             <frontend_type>text</frontend_type>
