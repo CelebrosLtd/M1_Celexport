@@ -143,3 +143,8 @@ issue with menu in adminpanel fixed
 
 ##### Build: 141 #####
 issue with delimiter in data history fixed
+
+Version 1.0.8
+-------------
+##### Build: 142 #####
+sftp and ftps support has been added
